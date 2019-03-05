@@ -1,0 +1,16 @@
+/* ---------------------------------------------------
+    CKEDITOR
+----------------------------------------------------- */
+#root button.ck-button {
+    color: rgb(51, 51, 51);
+    border-color: transparent;
+}
+
+#root button.ck-button:hover {
+    background-color: rgb(230, 230, 230);
+    color: rgb(51, 51, 51);
+}
+
+.ck-editor p, .ck-editor h1, .ck-editor h2, .ck-editor h3, .ck-editor h4 {
+    color: #000;
+}

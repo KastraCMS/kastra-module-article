@@ -1,0 +1,20 @@
+{
+	"Modules": [{
+		"Definition": {
+			"SystemName": "Article",
+			"DisplayName": "Article",
+			"Namespace": "Kastra.Module.Article",
+			"Path": "Default/Article",
+			"Version": "0.08.01"
+		},
+		"Controls": [{
+				"KeyName": "Settings",
+				"Path": "Settings"
+			},
+			{
+				"KeyName": "ArticleEdit",
+				"Path": "ArticleEdit"
+			}
+		]
+	}]
+}

@@ -1,0 +1,35 @@
+@using  Kastra.Module.Article.DTO;
+@model Kastra.Module.Article.Models.ArticleModel
+
+<section class="articles">
+    @foreach(ArticleInfo article in Model.Articles)
+    {
+        <article class="article">
+            @if(!String.IsNullOrEmpty(article.ImageUrl))
+            {
+                <div class="article-image">
+                    <img alt="" src="@article.ImageUrl" />
+                </div>
+            }
+            <div class="article-content">
+                <header>
+                    <h2>@article.Title</h2>
+                </header>
+                <p>
+                    @Html.Raw(article.ArticleContent)
+                </p>
+                <footer class="align-right">
+                    <span>
+                        @article.CreatedAt.ToString("dd MMM yyyy")
+                    </span>
+                </footer>
+            </div>
+        </article>
+
+        <hr>
+    }
+</section>
+
+
+
+

@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kastra.Module.Article", "src/Kastra.Module.Article.csproj", "{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

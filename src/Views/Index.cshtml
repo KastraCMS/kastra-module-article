@@ -1,5 +1,5 @@
 @using  Kastra.Module.Article.DTO;
-@model Kastra.Module.Article.Models.ArticleModel
+@model Kastra.Module.Article.Models.ArticlesModel
 
 <section class="articles">
     @foreach(ArticleInfo article in Model.Articles)
@@ -19,17 +19,29 @@
                     @Html.Raw(article.ArticleContent)
                 </p>
                 <footer class="align-right">
+                    <span class="author">
+                        @article.AuthorName
+                    </span>
                     <span>
                         @article.CreatedAt.ToString("dd MMM yyyy")
                     </span>
                 </footer>
             </div>
         </article>
-
-        <hr>
     }
-</section>
 
+    <div class="pagination">
+        @if(Model.PageIndex > 0)
+        {
+            <a asp-action=@Model.PageName asp-route-pageindex=@(Model.PageIndex-1)><span class="ion-ios-arrow-back"></span></a>
+        }
+        
+        @if(Model.PageSize > 0 && Model.PageTotal > 0 && (Model.PageTotal/Model.PageSize) > Model.PageIndex)
+        {
+            <a asp-action=@Model.PageName asp-route-pageindex=@(Model.PageIndex+1)><span class="ion-ios-arrow-forward"></span></a>
+        }
+    </div>
+</section>
 
 
 

@@ -26,7 +26,7 @@ namespace Kastra.Module.Article
         
         public override ViewViewComponentResult OnViewComponentLoad()
         {
-            ArticleModel model = new ArticleModel(this);
+            ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
             model.PageId = Page.PageId;
 
@@ -35,7 +35,7 @@ namespace Kastra.Module.Article
 
         public override ViewViewComponentResult OnViewComponentUpdate()
         {
-            ArticleModel model = new ArticleModel(this);
+            ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
             model.PageId = Page.PageId;
 

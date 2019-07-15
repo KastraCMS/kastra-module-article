@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Kastra.Core.Attributes;
 using Kastra.Core.ViewComponents;
 using Kastra.Module.Article.Business.Contracts;
 using Kastra.Module.Article.DAL;
@@ -13,6 +14,17 @@ namespace Kastra.Module.Article
     [ViewComponent(Name = "Kastra.Module.Article.Article")]
     public class ArticleViewComponent : ModuleViewComponent
     {
+        #region Parameters
+
+        /// <summary>
+        /// Page index contained in the query string.
+        /// </summary>
+        /// <value></value>
+        [Parameter("pageindex")]
+        public int PageIndex { get; set; }
+
+        #endregion
+
         private readonly ArticleContext _dbContext = null;
         private readonly IArticleBusiness _articleManager = null;
 
@@ -24,8 +36,17 @@ namespace Kastra.Module.Article
         
         public override ViewViewComponentResult OnViewComponentLoad()
         {
-            ArticleModel model = new ArticleModel(this);
-            model.Articles = _articleManager.GetArticlesList(Module.ModuleId)
+            ArticlesModel model = new ArticlesModel(this);
+            model.PageName = Page.KeyName;
+            model.PageIndex = PageIndex;
+
+            // Pagination
+            model.PageSize = model.PageSize == 0 ? 5 : model.PageSize;
+
+            int skip = model.PageIndex * model.PageSize;
+            
+            model.PageTotal = _articleManager.CountArticles(Module.ModuleId);
+            model.Articles = _articleManager.GetArticlesList(Module.ModuleId, skip, model.PageSize)
                                 ?.OrderByDescending(a => a.ArticleOrder)
                                 ?.ThenByDescending(a => a.UpdatedAt)
                                 ?.ToList() ?? new List<ArticleInfo>();

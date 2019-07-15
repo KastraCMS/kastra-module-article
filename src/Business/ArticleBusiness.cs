@@ -1,34 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kastra.Core.Dto;
 using Kastra.Module.Article.Business.Contracts;
 using Kastra.Module.Article.DAL;
 using Kastra.Module.Article.DTO;
 using Kastra.Module.Article.DTO.Mappers;
+using Microsoft.AspNetCore.Identity;
 
 namespace Kastra.Module.Article.Business
 {
     public class ArticleBusiness : IArticleBusiness
     {
         private ArticleContext _dbContext = null;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleBusiness(ArticleContext dbContext)
+        public ArticleBusiness(ArticleContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
-        public IList<ArticleInfo> GetArticlesList(Int32 moduleId)
+        public int CountArticles(int moduleId)
+        {
+            return _dbContext.KastraArticles.Count(a => a.ModuleId == moduleId);
+        }
+
+        public IList<ArticleInfo> GetArticlesList(int moduleId)
         {
             IList<ArticleInfo> articlesInfo = null;
             IList<KastraArticles> articles = _dbContext.KastraArticles.Where(a => a.ModuleId == moduleId).ToList();
 
+            if (articles == null)
+            {
+                return null;
+            }
+
             articlesInfo = new List<ArticleInfo>(articles.Count);
 
             foreach (KastraArticles article in articles)
+            {
                 articlesInfo.Add(article.ToArticleInfo());
+            }
+
+            SetAuthorName(articlesInfo);
+
+            return articlesInfo;
+        }
+
+        public IList<ArticleInfo> GetArticlesList(int moduleId, int skip, int take)
+        {
+            IList<ArticleInfo> articlesInfo = null;
+            IList<KastraArticles> articles = null;
+
+            articles = _dbContext.KastraArticles.Where(a => a.ModuleId == moduleId)
+                                                .Skip(skip)
+                                                .Take(take)
+                                                .ToList();
 
             if (articles == null)
+            {
                 return null;
+            }
+
+            articlesInfo = new List<ArticleInfo>(articles.Count);
+
+            foreach (KastraArticles article in articles)
+            {
+                articlesInfo.Add(article.ToArticleInfo());
+            }
+
+            SetAuthorName(articlesInfo);
 
             return articlesInfo;
         }
@@ -40,7 +82,11 @@ namespace Kastra.Module.Article.Business
             if (article == null)
                 return null;
             
-            return article.ToArticleInfo();
+            ArticleInfo articleInfo = article.ToArticleInfo();
+
+            SetAuthorName(articleInfo);
+            
+            return articleInfo;
         }
 
         public void SaveArticle(ArticleInfo articleInfo)
@@ -83,5 +129,48 @@ namespace Kastra.Module.Article.Business
                 _dbContext.SaveChanges();
             }  
         }
+
+        #region Private methods
+
+        private void SetAuthorName(IList<ArticleInfo> articles)
+        {
+            if (articles == null)
+            {
+                return;
+            }
+
+            string[] userIds = articles.Select(a => a.UpdatedBy).ToArray();
+
+            Dictionary<string, string> users = _userManager.Users
+                                                .Where(u => userIds.Contains(u.Id))
+                                                .ToDictionary(u => u.Id, u => u.DisplayedName);
+            
+            foreach (ArticleInfo article in articles)
+            {
+                if (users.ContainsKey(article.UpdatedBy))
+                {
+                    article.AuthorName = users[article.UpdatedBy];
+                }
+            }
+        }
+
+        private void SetAuthorName(ArticleInfo article)
+        {
+            if (article == null)
+            {
+                return;
+            }
+
+            string userId = article.UpdatedBy;
+
+            string user = _userManager.Users.SingleOrDefault(u => u.Id == userId)?.DisplayedName;
+
+            if (user != null)
+            {
+                article.AuthorName = user;
+            }
+        }
+
+        #endregion
     }
 }

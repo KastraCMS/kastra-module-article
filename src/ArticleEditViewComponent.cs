@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Kastra.Core.Attributes;
 using Kastra.Core.Dto;
 using Kastra.Core.ViewComponents;
@@ -27,7 +28,7 @@ namespace Kastra.Module.Article
             _userManager = userManager;
         }
 
-        public override ViewViewComponentResult OnViewComponentLoad()
+        public override Task<ViewViewComponentResult> OnViewComponentLoad()
         {
             AdminArticleModel model = new AdminArticleModel(this);
             ArticleInfo article = null;
@@ -60,10 +61,14 @@ namespace Kastra.Module.Article
             }
 
             if(article == null)
+            {
                 article = _articleBusiness.GetArticle(ArticleId);
+            }
 
             if(article == null)
-                return ModuleView("ArticleEdit", model);
+            {
+                return Task.FromResult(ModuleView("ArticleEdit", model));
+            }
 
             model.ArticleId = ArticleId;
             model.ArticleContent = article.ArticleContent;
@@ -71,8 +76,7 @@ namespace Kastra.Module.Article
             model.ImageUrl = article.ImageUrl;
             model.Title = article.Title;
 
-            return ModuleView("ArticleEdit", model);
+            return Task.FromResult(ModuleView("ArticleEdit", model));
         }
-
     }
 }

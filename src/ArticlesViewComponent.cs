@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Kastra.Core.Attributes;
 using Kastra.Core.ViewComponents;
 using Kastra.Module.Article.Business.Contracts;
@@ -34,7 +35,7 @@ namespace Kastra.Module.Article
             _articleManager = articleBusiness;
         }
         
-        public override ViewViewComponentResult OnViewComponentLoad()
+        public override Task<ViewViewComponentResult> OnViewComponentLoad()
         {
             ArticlesModel model = new ArticlesModel(this);
             model.PageName = Page.KeyName;
@@ -51,7 +52,7 @@ namespace Kastra.Module.Article
                                 ?.ThenByDescending(a => a.UpdatedAt)
                                 ?.ToList() ?? new List<ArticleInfo>();
 
-            return ModuleView("Index", model);
+            return Task.FromResult(ModuleView("Index", model));
         }
     }
 }

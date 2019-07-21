@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Kastra.Core.Attributes;
 using Kastra.Core.ViewComponents;
 using Kastra.Module.Article.Business.Contracts;
@@ -24,25 +25,25 @@ namespace Kastra.Module.Article
             _articleBusiness = articleBusiness;
         }
         
-        public override ViewViewComponentResult OnViewComponentLoad()
+        public override Task<ViewViewComponentResult> OnViewComponentLoad()
         {
             ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
             model.PageId = Page.PageId;
 
-            return ModuleView("Settings", model);
+            return Task.FromResult(ModuleView("Settings", model));
         }
 
-        public override ViewViewComponentResult OnViewComponentUpdate()
+        public override Task<ViewViewComponentResult> OnViewComponentUpdate()
         {
             ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
             model.PageId = Page.PageId;
 
-            return ModuleView("Settings", model);
+            return Task.FromResult(ModuleView("Settings", model));
         }
 
-        public override ViewViewComponentResult OnViewComponentDelete()
+        public override Task<ViewViewComponentResult> OnViewComponentDelete()
         {
             if(ArticleId <= 0)
                 return OnViewComponentLoad();

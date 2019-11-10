@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kastra.Module.Article", "src/Kastra.Module.Article.csproj", "{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kastra.Module.Article", "src\Kastra.Module.Article.csproj", "{ABA4A9C5-57F5-4766-BE4C-43F583E3ADB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

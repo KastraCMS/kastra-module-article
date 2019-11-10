@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <ReleaseVersion>0.9.28</ReleaseVersion>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="DTO\" />
@@ -11,11 +10,10 @@
     <Folder Include="Business\Contracts\" />
     <Folder Include="DTO\Mappers\" />
   </ItemGroup>
-   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.12" />
-    <PackageReference Include="Kastra.Core" Version="0.9.18" />
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+    <PackageReference Include="Kastra.Core" Version="0.9.28" />
   </ItemGroup>
 </Project>

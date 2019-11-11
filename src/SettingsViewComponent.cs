@@ -1,23 +1,22 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Kastra.Core.Attributes;
-using Kastra.Core.ViewComponents;
+using Kastra.Core.Modules;
+using Kastra.Core.Modules.ViewComponents;
 using Kastra.Module.Article.Business.Contracts;
 using Kastra.Module.Article.DAL;
 using Kastra.Module.Article.Models;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace Kastra.Module.Article
 {
     [ViewComponentAuthorize(Claims = "GlobalSettingsEdition")]
     public class SettingsViewComponent : ModuleViewComponent
     {
-        [ParameterAttribute("ArticleId")]
-        public Int32 ArticleId { get; set; }
+        [Parameter("ArticleId")]
+        public int ArticleId { get; set; }
 
-        private readonly ArticleContext _dbContext = null;
-        private readonly IArticleBusiness _articleBusiness = null;
+        private readonly ArticleContext _dbContext;
+        private readonly IArticleBusiness _articleBusiness;
 
         public SettingsViewComponent(ArticleContext dbContext, IArticleBusiness articleBusiness)
         {
@@ -25,7 +24,7 @@ namespace Kastra.Module.Article
             _articleBusiness = articleBusiness;
         }
         
-        public override Task<ViewViewComponentResult> OnViewComponentLoad()
+        public override Task<ModuleViewComponentResult> OnViewComponentLoad()
         {
             ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
@@ -34,7 +33,7 @@ namespace Kastra.Module.Article
             return Task.FromResult(ModuleView("Settings", model));
         }
 
-        public override Task<ViewViewComponentResult> OnViewComponentUpdate()
+        public override Task<ModuleViewComponentResult> OnViewComponentUpdate()
         {
             ArticlesModel model = new ArticlesModel(this);
             model.Articles = _articleBusiness.GetArticlesList(Module.ModuleId).OrderByDescending(a => a.ArticleOrder).ToList();
@@ -43,7 +42,7 @@ namespace Kastra.Module.Article
             return Task.FromResult(ModuleView("Settings", model));
         }
 
-        public override Task<ViewViewComponentResult> OnViewComponentDelete()
+        public override Task<ModuleViewComponentResult> OnViewComponentDelete()
         {
             if(ArticleId <= 0)
                 return OnViewComponentLoad();

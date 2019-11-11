@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kastra.Core.Business;
-using Kastra.Core.Controllers;
 using Kastra.Core.Dto;
+using Kastra.Core.Modules.Controllers;
 using Kastra.Module.Article.Business.Contracts;
 using Kastra.Module.Article.DTO;
 using Kastra.Module.Article.Models.API;
@@ -16,10 +16,13 @@ namespace Kastra.Module.Article.Controllers
     [Authorize("Administration")]
     public class ArticleController : ModuleController
     {
-        private IArticleBusiness _articleBusiness = null;
-        private readonly UserManager<ApplicationUser> _userManager = null;
+        private IArticleBusiness _articleBusiness;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleController(IViewManager viewManager, IArticleBusiness articleBusiness, UserManager<ApplicationUser> userManager) : base(viewManager)
+        public ArticleController(
+            IViewManager viewManager,
+            IArticleBusiness articleBusiness,
+            UserManager<ApplicationUser> userManager) : base(viewManager)
         {
             _articleBusiness = articleBusiness;
             _userManager = userManager;

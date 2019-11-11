@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Kastra.Core.Attributes;
-using Kastra.Core.ViewComponents;
+﻿using System.Collections.Generic;
+using Kastra.Core.Modules;
+using Kastra.Core.Modules.ViewComponents;
 using Kastra.Module.Article.DTO;
 
 namespace Kastra.Module.Article.Models

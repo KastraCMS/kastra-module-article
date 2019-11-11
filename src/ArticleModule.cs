@@ -1,12 +1,12 @@
-﻿using Kastra.Core;
-using Kastra.Module.Article.Business;
-using Kastra.Module.Article.Business.Contracts;
-using Kastra.Module.Article.DAL;
+﻿using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Kastra.Core.Business;
+using Kastra.Core.Modules;
+using Kastra.Module.Article.Business;
+using Kastra.Module.Article.Business.Contracts;
+using Kastra.Module.Article.DAL;
 
 namespace Kastra.Module.Article
 {

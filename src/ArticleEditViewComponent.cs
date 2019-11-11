@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using Kastra.Core.Attributes;
 using Kastra.Core.Dto;
-using Kastra.Core.ViewComponents;
+using Kastra.Core.Modules;
+using Kastra.Core.Modules.ViewComponents;
 using Kastra.Module.Article.Business.Contracts;
 using Kastra.Module.Article.DAL;
 using Kastra.Module.Article.DTO;
 using Kastra.Module.Article.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace Kastra.Module.Article
 {
@@ -21,20 +21,23 @@ namespace Kastra.Module.Article
         private readonly IArticleBusiness _articleBusiness = null;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleEditViewComponent(ArticleContext dbContext, UserManager<ApplicationUser> userManager, IArticleBusiness articleBusiness)
+        public ArticleEditViewComponent(
+            ArticleContext dbContext,
+            UserManager<ApplicationUser> userManager,
+            IArticleBusiness articleBusiness)
         {
             _dbContext = dbContext;
             _articleBusiness = articleBusiness;
             _userManager = userManager;
         }
 
-        public override Task<ViewViewComponentResult> OnViewComponentLoad()
+        public override Task<ModuleViewComponentResult> OnViewComponentLoad()
         {
             AdminArticleModel model = new AdminArticleModel(this);
             ArticleInfo article = null;
 
             // Update
-            if(model.ValidForm)
+            if(Request.Method == "POST")
             {
                 String userId = _userManager.GetUserId(HttpContext.User);
                 article = _articleBusiness.GetArticle(ArticleId);

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Kastra.Core.ViewComponents;
+using Kastra.Core.Modules;
+using Kastra.Core.Modules.ViewComponents;
 
 namespace Kastra.Module.Article.Models
 {
@@ -20,18 +20,18 @@ namespace Kastra.Module.Article.Models
         {
         }
 
-        public Int32 ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         [Display(Name="Title :")]
-        public String Title { get; set; }
+        public string Title { get; set; }
 
         [Display(Name="Content:")]
-        public String ArticleContent { get; set; }
+        public string ArticleContent { get; set; }
 
         [Display(Name="Image Url :")]
-        public String ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         [Display(Name="Order :")]
-        public Int32 ArticleOrder { get; set; }
+        public int ArticleOrder { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 			"DisplayName": "Article",
 			"Namespace": "Kastra.Module.Article",
 			"Path": "Default/Article",
-			"Version": "0.09.32"
+			"Version": "0.09.34"
 		},
 		"Controls": [{
 				"KeyName": "Settings",
